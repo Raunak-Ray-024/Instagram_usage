@@ -24,7 +24,6 @@ st.markdown("Interactive UI built from the original analysis file")
 # gdown.download(url, output, quiet=False)
 # df = pd.read_csv(output)
 import kagglehub
-import gdown
 import os
 
 #@st.cache_data(show_spinner=True)
