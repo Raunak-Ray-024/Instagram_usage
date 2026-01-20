@@ -23,16 +23,23 @@ st.markdown("Interactive UI built from the original analysis file")
 # output = "instagram_usage_lifestyle.csv"
 # gdown.download(url, output, quiet=False)
 # df = pd.read_csv(output)
-
+import kagglehub
 import gdown
 import os
-url = f"https://drive.google.com/uc?id=1mU7OYUaC2Dl8pOWUnNoeFvx5uBQ9sJC9"
-output = "instagram_usage_lifestyle.csv"
 
-if not os.path.exists(output):
-    gdown.download(url, output, quiet=False, fuzzy=True)
+#@st.cache_data(show_spinner=True)
+def load_data():
+    # Download dataset from Kaggle (runs only first time)
+    path = kagglehub.dataset_download("rockyt07/social-media-user-analysis")
 
-df = pd.read_csv(output,nrows=200000)
+    csv_file = os.path.join(path, "instagram_usage_lifestyle.csv")
+
+    # Load limited rows to prevent memory crash
+    df = pd.read_csv(csv_file, nrows=100000)
+
+    return df
+
+df = load_data()
 
 
 # -------------------- DROP COLUMNS (FROM ORIGINAL FILE) --------------------
